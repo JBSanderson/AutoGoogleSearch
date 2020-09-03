@@ -1,0 +1,50 @@
+// ==UserScript==
+
+// @name        Business search
+
+// @namespace   google
+
+// @description Auto google search business name 30 times.
+
+// @include     http*://www.google.com*
+// @include     http*://www.google.com/search?*
+
+// @version     0.1
+
+// @grant       none
+
+// ==/UserScript==
+
+//keep track of how many searches were done
+var iter = window.location.hash.substring(1);
+
+if(iter == "NaN"){
+    iter = 0;
+}
+iter = parseInt(iter)+1;
+
+if (iter > 30){
+    return false;
+}
+
+window.setTimeout(function() {
+
+    //get a random serach
+    var newSearch = createRandomSearch();
+
+    if( Math.round( Math.random() ) ){
+       if( Math.round( Math.random() ) ){
+           newSearch += "+" + createRandomSearch();
+       }
+    }
+
+    //execute new query
+    window.open("https://www.google.com/search?q="+newSearch+"#"+iter,"_self");
+
+}, (Math.random()*2000)+3000);
+
+function createRandomSearch(){
+  return searchWords[Math.floor(Math.random()*searchWords.length)];
+}
+
+var searchWords = new Array("oakwest+landscapes", "oakwest+landscaping", "oakwest+landscapes", "oakwest+landscape+design");
